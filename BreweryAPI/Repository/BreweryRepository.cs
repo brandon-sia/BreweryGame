@@ -41,7 +41,7 @@ namespace BreweryAPI.Repository
 
         public ICollection<Beer> GetBeerByBrewery(int breweryId)
         {
-            return _context.Beers.Where(br => br.Id == breweryId).Select(b=>b).ToList();
+            return _context.Beers.Where(b => b.BrewerId == breweryId).Select(b=>b).ToList();
         }
 
         public bool Save()

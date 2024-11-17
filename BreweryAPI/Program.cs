@@ -18,6 +18,8 @@ namespace BreweryAPI
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<IBeerRepository, BeerRepository>();
             builder.Services.AddScoped<IBreweryRepository, BreweryRepository>();
+            builder.Services.AddScoped<IWholesalerRepository, WholeSalerRepository>();
+            builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

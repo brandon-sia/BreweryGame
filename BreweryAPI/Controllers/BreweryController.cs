@@ -8,81 +8,79 @@ namespace BreweryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BeerController : Controller
+    public class BreweryController : Controller
     {
-        private readonly IBeerRepository _beerRepository;
         private readonly IBreweryRepository _breweryRepository;
         private readonly IMapper _mapper;
 
-        public BeerController(IBeerRepository beerRepository, IBreweryRepository breweryRepository, IMapper mapper)
+        public BreweryController(IBreweryRepository breweryRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _beerRepository = beerRepository;
             _breweryRepository = breweryRepository;
              
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Beer>))]
-        public IActionResult GetBeers()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Brewery>))]
+        public IActionResult GetBrewery()
         {
-            var beers = _mapper.Map<List<BeerDTO>>(_beerRepository.GetBeers());
+            var breweries = _mapper.Map<List<BreweryDTO>>(_breweryRepository.GetBreweries());
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(beers);
+            return Ok(breweries);
         }
 
-        [HttpGet("{beerId}")]
-        [ProducesResponseType(200, Type = typeof(Beer))]
+        [HttpGet("{breweryId}")]
+        [ProducesResponseType(200, Type = typeof(Brewery))]
         [ProducesResponseType(400)]
-        public IActionResult GetBeer(int beerId)
+        public IActionResult GetBrewery(int breweryId)
         {
-            if (!_beerRepository.BeerExists(beerId))
+            if (!_breweryRepository.BreweryExists(breweryId))
             {
                 return NotFound();
             }
-            var beer = _mapper.Map<BeerDTO>(_beerRepository.GetBeer(beerId));
+            var brewery = _mapper.Map<BreweryDTO>(_breweryRepository.GetBrewery(breweryId));
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(beer);
+            return Ok(brewery);
         }
 
-        [HttpGet("brewery/{beerId}")]
+        [HttpGet("beers/{breweryId}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Beer>))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetBreweryByBeerId(int beerId)
+        public IActionResult GetBeerByBreweryId(int breweryId)
         {
-            var breweries = _mapper.Map<List<BreweryDTO>>(_beerRepository.GetBreweryByBeer(beerId));
+            var beers = _mapper.Map<List<BeerDTO>>(_breweryRepository.GetBeerByBrewery(breweryId));
 
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            return Ok(breweries);
+            return Ok(beers);
         }
 
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateBeer([FromQuery] int brewerId, [FromBody] BeerDTO beerCreate)
+        public IActionResult CreateBrewery([FromBody] BreweryDTO breweryCreate)
         {
-            if (beerCreate == null)
+            if (breweryCreate == null)
                 return BadRequest(ModelState);
 
-            var beer = _beerRepository.GetBeers()
-                .Where(c => c.Name.Trim().ToUpper() == beerCreate.Name.TrimEnd().ToUpper())
+            var brewery = _breweryRepository.GetBreweries()
+                .Where(c => c.Name.Trim().ToUpper() == breweryCreate.Name.TrimEnd().ToUpper())
                 .FirstOrDefault();
 
-            if (beer != null)
+            if (brewery != null)
             {
-                ModelState.AddModelError("", "Beer already exists");
+                ModelState.AddModelError("", "Brewery already exists");
                 return StatusCode(422, ModelState);
             }
 
@@ -90,11 +88,9 @@ namespace BreweryAPI.Controllers
             if (!ModelState.IsValid)
             { return BadRequest(ModelState); }
 
-            var beerMap = _mapper.Map<Beer>(beerCreate);
-            beerMap.BrewerId = brewerId;
-            beerMap.Brewer = _breweryRepository.GetBrewery(brewerId);
+            var breweryMap = _mapper.Map<Brewery>(breweryCreate);
 
-            if (!_beerRepository.CreateBeer(beerMap))
+            if (!_breweryRepository.CreateBrewery(breweryMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -104,31 +100,31 @@ namespace BreweryAPI.Controllers
 
         }
 
-        [HttpPut("{beerId}")]
+        [HttpPut("{breweryId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateBeer(int beerId, [FromBody] BeerDTO updatedBeer)
+        public IActionResult UpdateBrewery(int breweryId, [FromBody] BreweryDTO updatedBrewery)
         {
-            if (updatedBeer == null)
+            if (updatedBrewery == null)
             {
                 return BadRequest(ModelState);
             }
 
-            if (beerId != updatedBeer.Id)
+            if (breweryId != updatedBrewery.Id)
                 return BadRequest(ModelState);
 
-            if (!_beerRepository.BeerExists(beerId))
+            if (!_breweryRepository.BreweryExists(breweryId))
                 return NotFound();
 
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var beerMap = _mapper.Map<Beer>(updatedBeer);
+            var breweryMap = _mapper.Map<Brewery>(updatedBrewery);
 
-            if (!_beerRepository.UpdateBeer(beerMap))
+            if (!_breweryRepository.UpdateBrewery(breweryMap))
             {
-                ModelState.AddModelError("", "Something went wrong updating beer");
+                ModelState.AddModelError("", "Something went wrong updating brewery");
                 return StatusCode(500, ModelState);
             }
 
@@ -136,28 +132,28 @@ namespace BreweryAPI.Controllers
 
         }
 
-        [HttpDelete("{beerId}")]
+        [HttpDelete("{breweryId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public IActionResult DeleteBeer(int beerId)
+        public IActionResult DeleteBrewery(int breweryId)
         {
-            if (!_beerRepository.BeerExists(beerId))
+            if (!_breweryRepository.BreweryExists(breweryId))
             {
                 return NotFound();
             }
 
-            var beerToDelete = _beerRepository.GetBeer(beerId);
+            var breweryToDelete = _breweryRepository.GetBrewery(breweryId);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!_beerRepository.DeleteBeer(beerToDelete))
+            if (!_breweryRepository.DeleteBrewery(breweryToDelete))
             {
-                ModelState.AddModelError("", "Something went wrong deleting beer");
+                ModelState.AddModelError("", "Something went wrong deleting brewery");
             }
 
             return NoContent();
