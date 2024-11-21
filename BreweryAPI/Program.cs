@@ -20,6 +20,8 @@ namespace BreweryAPI
             builder.Services.AddScoped<IBreweryRepository, BreweryRepository>();
             builder.Services.AddScoped<IWholesalerRepository, WholeSalerRepository>();
             builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+            builder.Services.AddScoped<IQuoteRepository, QuoteRepository>();
+            builder.Services.AddScoped<IQuoteDetailRepository, QuoteDetailRepository>();
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

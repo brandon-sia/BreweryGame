@@ -124,7 +124,7 @@ namespace BreweryAPI.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
 
-        public IActionResult DeleteBrewery(int inventoryId)
+        public IActionResult DeleteInventory(int inventoryId)
         {
             if (!_inventoryRepository.InventoryExists(inventoryId))
             {

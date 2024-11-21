@@ -12,6 +12,8 @@ namespace PokemonReviewApp.Helper
             CreateMap<Brewery, BreweryDTO>().ReverseMap();
             CreateMap<Wholesaler, WholesalerDTO>().ReverseMap();
             CreateMap<Inventory, InventoryDTO>().ReverseMap();
+            CreateMap<Quote, QuoteDTO>().ReverseMap();
+            CreateMap<QuoteDetail, QuoteDetailDTO>().ReverseMap();
         }
     }
 }
