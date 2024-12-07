@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreweryAPI", "BreweryAPI\BreweryAPI.csproj", "{395E78EA-9555-40AB-88ED-29A8D3322B43}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BreweryWPF", "BreweryWPF\BreweryWPF.csproj", "{3E2F8F8D-D92A-4FDF-8010-293807C175E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{395E78EA-9555-40AB-88ED-29A8D3322B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{395E78EA-9555-40AB-88ED-29A8D3322B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{395E78EA-9555-40AB-88ED-29A8D3322B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E2F8F8D-D92A-4FDF-8010-293807C175E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E2F8F8D-D92A-4FDF-8010-293807C175E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E2F8F8D-D92A-4FDF-8010-293807C175E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E2F8F8D-D92A-4FDF-8010-293807C175E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

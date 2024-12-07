@@ -10,21 +10,28 @@ namespace BreweryAPI.Controllers
     [ApiController]
     public class QuoteDetailController : Controller
     {
-        private readonly IQuoteDetailRepository _quoteRepository;
+        private readonly IQuoteDetailRepository _quoteDetailRepository;
+        private readonly IQuoteRepository _quoteRepository;
+        private readonly IInventoryRepository _inventoryRepository;
         private readonly IMapper _mapper;
 
-        public QuoteDetailController(IQuoteDetailRepository quoteRepository, IMapper mapper)
+        public QuoteDetailController(IQuoteDetailRepository quoteDetailRepository,
+            IQuoteRepository quoteRepository,
+            IInventoryRepository inventoryRepository,
+            IMapper mapper)
         {
             _mapper = mapper;
+            _quoteDetailRepository = quoteDetailRepository;
             _quoteRepository = quoteRepository;
-             
+            _inventoryRepository = inventoryRepository;
+
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<QuoteDetail>))]
         public IActionResult GetQuoteDetails()
         {
-            var quotes = _mapper.Map<List<QuoteDetailDTO>>(_quoteRepository.GetQuoteDetails());
+            var quotes = _mapper.Map<List<QuoteDetailDTO>>(_quoteDetailRepository.GetQuoteDetails());
 
             if (!ModelState.IsValid)
             {
@@ -38,11 +45,11 @@ namespace BreweryAPI.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetQuoteDetail(int quoteDetailId)
         {
-            if (!_quoteRepository.QuoteDetailExists(quoteDetailId))
+            if (!_quoteDetailRepository.QuoteDetailExists(quoteDetailId))
             {
                 return NotFound();
             }
-            var quote = _mapper.Map<QuoteDetailDTO>(_quoteRepository.GetQuoteDetail(quoteDetailId));
+            var quote = _mapper.Map<QuoteDetailDTO>(_quoteDetailRepository.GetQuoteDetail(quoteDetailId));
 
             if (!ModelState.IsValid)
             {
@@ -55,28 +62,47 @@ namespace BreweryAPI.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateQuoteDetail([FromBody] QuoteDetailDTO quoteCreate)
+        public IActionResult CreateQuoteDetail([FromBody] QuoteDetailDTO quoteDetailCreate)
         {
-            if (quoteCreate == null)
+            if (quoteDetailCreate == null)
                 return BadRequest(ModelState);
 
-            var quote = _quoteRepository.GetQuoteDetails()
-                .Where(i => i.Id == quoteCreate.Id)
+            var quote = _quoteRepository.GetQuote(quoteDetailCreate.QuoteId);
+
+            if (quote == null)
+            {
+                ModelState.AddModelError("", "Quote does not exists");
+                return StatusCode(422, ModelState);
+            }
+
+            var quoteDetail = _quoteDetailRepository.GetQuoteDetails()
+                .Where(i => i.QuoteId == quoteDetailCreate.Id)
                 .FirstOrDefault();
 
-            if (quote != null)
+            if (quoteDetail != null)
             {
                 ModelState.AddModelError("", "QuoteDetail already exists");
                 return StatusCode(422, ModelState);
             }
 
+      
+            var inventoryQuantity = _inventoryRepository.GetInventories()
+                .Where(i => i.WholesalerId == quote.WholesalerId && i.BeerId == quoteDetailCreate.BeerId)
+                .FirstOrDefault().Stock;
+
+
+            if (quoteDetailCreate.Quantity > inventoryQuantity)
+            {
+                ModelState.AddModelError("", "Insufficient stock for the beer quoted");
+                return StatusCode(422, ModelState);
+            }
 
             if (!ModelState.IsValid)
             { return BadRequest(ModelState); }
 
-            var quoteMap = _mapper.Map<QuoteDetail>(quoteCreate);
+            var quoteMap = _mapper.Map<QuoteDetail>(quoteDetailCreate);
 
-            if (!_quoteRepository.CreateQuoteDetail(quoteMap))
+            if (!_quoteDetailRepository.CreateQuoteDetail(quoteMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -101,7 +127,7 @@ namespace BreweryAPI.Controllers
             if (quoteDetailId != updatedQuoteDetail.Id)
                 return BadRequest(ModelState);
 
-            if (!_quoteRepository.QuoteDetailExists(quoteDetailId))
+            if (!_quoteDetailRepository.QuoteDetailExists(quoteDetailId))
                 return NotFound();
 
             if (!ModelState.IsValid)
@@ -109,7 +135,7 @@ namespace BreweryAPI.Controllers
 
             var quoteMap = _mapper.Map<QuoteDetail>(updatedQuoteDetail);
 
-            if (!_quoteRepository.UpdateQuoteDetail(quoteMap))
+            if (!_quoteDetailRepository.UpdateQuoteDetail(quoteMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating QuoteDetail");
                 return StatusCode(500, ModelState);
@@ -126,19 +152,19 @@ namespace BreweryAPI.Controllers
 
         public IActionResult DeleteQuoteDetail(int quoteDetailId)
         {
-            if (!_quoteRepository.QuoteDetailExists(quoteDetailId))
+            if (!_quoteDetailRepository.QuoteDetailExists(quoteDetailId))
             {
                 return NotFound();
             }
 
-            var quoteToDelete = _quoteRepository.GetQuoteDetail(quoteDetailId);
+            var quoteToDelete = _quoteDetailRepository.GetQuoteDetail(quoteDetailId);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!_quoteRepository.DeleteQuoteDetail(quoteToDelete))
+            if (!_quoteDetailRepository.DeleteQuoteDetail(quoteToDelete))
             {
                 ModelState.AddModelError("", "Something went wrong deleting QuoteDetail");
             }

@@ -45,7 +45,6 @@ namespace BreweryAPI
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
