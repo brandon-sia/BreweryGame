@@ -17,12 +17,19 @@ namespace BreweryWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BeerService _beerService;
         public MainWindow()
         {
             InitializeComponent();
         }
-    }
 
+        private void OpenCreateBeerWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateBeerWindow createBeerWindow = new CreateBeerWindow();
+            if (createBeerWindow.ShowDialog() == true)
+            {
+                // Update your UI with the new beer
+            }
+        }
+    }
 
 }

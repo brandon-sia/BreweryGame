@@ -6,14 +6,13 @@
         mc:Ignorable="d"
         Title="Brewery App" Height="450" Width="800">
 
-    <Window.DataContext>
-        <local:BeerViewModel/>
-    </Window.DataContext>
 
     <Grid>
-         
         <TabControl>
-            <TabItem Header="Type of Beers">
+            <TabItem Header="Beers">
+                <TabItem.DataContext>
+                    <local:BeerViewModel/>
+                </TabItem.DataContext>
                 <Grid Background="#FFE5E5E5">
 
                     <Grid.ColumnDefinitions>
@@ -26,6 +25,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -33,16 +33,70 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid ItemsSource="{Binding Beers}" AutoGenerateColumns="True"
-                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" />
-                    <!--<TextBlock Text="Loading..." HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
-                        FontSize="16" FontWeight="Bold" />-->
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
+                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Breweries">
+                <TabItem.DataContext>
+                    <local:BreweryViewModel/>
+                </TabItem.DataContext>
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid ItemsSource="{Binding Breweries}" AutoGenerateColumns="True"
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
+
+                </Grid>
             </TabItem>
+
+            <TabItem Header="Wholesalers">
+                <TabItem.DataContext>
+                    <local:WholesalerViewModel/>
+                </TabItem.DataContext>
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid ItemsSource="{Binding Wholesalers}" AutoGenerateColumns="True"
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
+                    
+
+                </Grid>
+            </TabItem>
+
         </TabControl>
 
     </Grid>

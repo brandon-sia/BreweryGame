@@ -7,5 +7,6 @@
         public int BrewerId { get; set; }
         public Brewery Brewer { get; set; }
         public ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
+        
     }
 }
