@@ -26,17 +26,17 @@ namespace BreweryWPF.Services
 
         public async Task<List<BeerDTO>> GetBeersAsync()
         {
-            var response = await _httpClient.GetAsync("api/beer");
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.GetAsync("api/beer");
+                response.EnsureSuccessStatusCode();
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            return System.Text.Json.JsonSerializer.Deserialize<List<BeerDTO>>(jsonResponse, options);
-        }
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return System.Text.Json.JsonSerializer.Deserialize<List<BeerDTO>>(jsonResponse, options);
+            }
 
         public async Task<bool> CreateBeerAsync(string name, int breweryId)
         {

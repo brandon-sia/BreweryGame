@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BreweryAPI.Models;
 using BreweryWPF.Services;
 
@@ -14,7 +15,7 @@ namespace BreweryWPF.ViewModel
     public class BeerViewModel : INotifyPropertyChanged
     {
         private readonly BeerService _beerService;
-
+        public ICommand RefreshCommand { get; }
         public ObservableCollection<BeerDTO> Beers { get; set; } = new ObservableCollection<BeerDTO>();
 
         private bool _isLoading;
@@ -33,6 +34,7 @@ namespace BreweryWPF.ViewModel
             // Set the API base address
             _beerService = new BeerService("https://localhost:5000/");
             LoadBeers();
+            RefreshCommand = new RelayCommand(LoadBeers);
         }
 
         public async void LoadBeers()
@@ -47,6 +49,7 @@ namespace BreweryWPF.ViewModel
                     Beers.Add(beer);
                 }
             }
+            catch { }
             finally
             {
                 IsLoading = false;

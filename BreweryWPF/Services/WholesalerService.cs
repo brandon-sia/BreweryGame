@@ -23,17 +23,17 @@ namespace BreweryWPF.Services
 
         public async Task<List<WholesalerDTO>> GetWholesalerAsync()
         {
-            var response = await _httpClient.GetAsync("api/wholesaler");
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.GetAsync("api/wholesaler");
+                response.EnsureSuccessStatusCode();
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<WholesalerDTO>>(jsonResponse, options);
-        }
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<WholesalerDTO>>(jsonResponse, options);
+            }
 
 
     }

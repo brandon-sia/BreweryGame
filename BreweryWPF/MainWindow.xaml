@@ -26,6 +26,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -33,8 +34,9 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid ItemsSource="{Binding Beers}" AutoGenerateColumns="True"
-                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="3" />
                     <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" HorizontalAlignment="Left" Grid.Row="2"/>
 
                 </Grid>
             </TabItem>
@@ -55,6 +57,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -62,7 +65,9 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid ItemsSource="{Binding Breweries}" AutoGenerateColumns="True"
-                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="3" />
+                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" HorizontalAlignment="Left" Grid.Row="2"/>
 
                 </Grid>
             </TabItem>
@@ -84,6 +89,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -91,8 +97,10 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid ItemsSource="{Binding Wholesalers}" AutoGenerateColumns="True"
-                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="2" />
-                    
+                        IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="3" />
+                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" HorizontalAlignment="Left" Grid.Row="2"/>
+
 
                 </Grid>
             </TabItem>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BreweryAPI.DTO;
 using BreweryAPI.Models;
 using BreweryWPF.Services;
@@ -15,7 +16,7 @@ namespace BreweryWPF.ViewModel
     public class WholesalerViewModel : INotifyPropertyChanged
     {
         private readonly WholesalerService _wholesalerService;
-
+        public ICommand RefreshCommand { get; }
         public ObservableCollection<WholesalerDTO> Wholesalers { get; set; } = new ObservableCollection<WholesalerDTO>();
 
         private bool _isLoading;
@@ -34,6 +35,7 @@ namespace BreweryWPF.ViewModel
             // Set the API base address
             _wholesalerService = new WholesalerService("https://localhost:5000/");
             LoadWholesalers();
+            RefreshCommand = new RelayCommand(LoadWholesalers);
         }
 
         public async void LoadWholesalers()
@@ -48,6 +50,7 @@ namespace BreweryWPF.ViewModel
                     Wholesalers.Add(wholesaler);
                 }
             }
+            catch { }
             finally
             {
                 IsLoading = false;
