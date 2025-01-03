@@ -66,7 +66,7 @@
 
                     <DataGrid ItemsSource="{Binding Breweries}" AutoGenerateColumns="True"
                         IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="3" />
-                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBreweryButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
                     <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" HorizontalAlignment="Left" Grid.Row="2"/>
 
                 </Grid>
@@ -98,7 +98,7 @@
 
                     <DataGrid ItemsSource="{Binding Wholesalers}" AutoGenerateColumns="True"
                         IsReadOnly="True" Grid.Column="1"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="3" />
-                    <Button Grid.Column="1" Content="Add" Click="OpenCreateBeerWindowButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+                    <Button Grid.Column="1" Content="Add" Click="OpenCreateWholesalerButton_Click" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
                     <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" HorizontalAlignment="Left" Grid.Row="2"/>
 
 

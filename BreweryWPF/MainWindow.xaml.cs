@@ -35,6 +35,24 @@ namespace BreweryWPF
                 // Update your UI with the new beer
             }
         }
+
+        private void OpenCreateBreweryButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateBreweryWindow createBreweryWindow = new CreateBreweryWindow();
+            if (createBreweryWindow.ShowDialog() == true)
+            {
+                // Update your UI with the new beer
+            }
+        }
+
+        private void OpenCreateWholesalerButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateWholesalerWindow createWholesalerWindow = new CreateWholesalerWindow();
+            if (createWholesalerWindow.ShowDialog() == true)
+            {
+                // Update your UI with the new beer
+            }
+        }
     }
 
 }

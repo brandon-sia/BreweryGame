@@ -16,4 +16,13 @@
     <ProjectReference Include="..\BreweryAPI\BreweryAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="CreateWholesalerWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CreateBreweryWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

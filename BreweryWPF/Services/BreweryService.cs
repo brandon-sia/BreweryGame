@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -34,6 +35,19 @@ namespace BreweryWPF.Services
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<BreweryDTO>>(jsonResponse, options);
+        }
+
+        public async Task<bool> CreateBreweryAsync(string name)
+        {
+
+            Brewery brewery = new Brewery
+            {
+                Name = name
+            };
+
+            var response = await _httpClient.PostAsJsonAsync($"api/brewery", brewery);
+
+            return response.IsSuccessStatusCode;
         }
 
     }
